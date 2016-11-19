@@ -1,0 +1,26 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle focus-next-tab'
+      'command': 'focus-next-tab:toggle'
+    },
+    {
+      'label': 'Focus: Tab to the Left'
+      'command': 'focus-next-tab:left'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'focus-next-tab'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'focus-next-tab:toggle'
+        }
+      ]
+    ]
+  }
+]

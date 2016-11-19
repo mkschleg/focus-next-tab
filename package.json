@@ -1,0 +1,18 @@
+{
+  "name": "focus-next-tab",
+  "main": "./lib/focus-next-tab",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "focus-next-tab:toggle"
+  },
+  "repository": "https://github.com/atom/focus-next-tab",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}
