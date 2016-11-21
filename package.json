@@ -2,17 +2,22 @@
   "name": "focus-next-tab",
   "main": "./lib/focus-next-tab",
   "version": "0.0.0",
-  "description": "A short description of your package",
-  "keywords": [
+  "description": "Another simple package for changing tabs. This one has the ability to change to the left or right of your current tab.",
+  "keywords": ["tabs", "focus", "view", "emacs"
   ],
   "activationCommands": {
-    "atom-workspace": "focus-next-tab:toggle"
+    "atom-workspace": [
+      "focus-next-tab:Left",
+      "focus-next-tab:Right",
+      "focus-next-tab:Search"
+    ]
   },
-  "repository": "https://github.com/atom/focus-next-tab",
+  "repository": "https://github.com/mkschleg/focus-next-tab",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.2.0"
   }
 }

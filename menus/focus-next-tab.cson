@@ -4,10 +4,6 @@
     {
       'label': 'Toggle focus-next-tab'
       'command': 'focus-next-tab:toggle'
-    },
-    {
-      'label': 'Focus: Tab to the Left'
-      'command': 'focus-next-tab:left'
     }
   ]
 'menu': [

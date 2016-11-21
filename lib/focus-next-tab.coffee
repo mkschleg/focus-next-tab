@@ -1,33 +1,64 @@
-FocusNextTabView = require './focus-next-tab-view'
+FocusSearchView = require './focus-search-view'
 {CompositeDisposable} = require 'atom'
 
 module.exports = FocusNextTab =
-  focusNextTabView: null
-  modalPanel: null
   subscriptions: null
 
-  activate: (state) ->
-    @focusNextTabView = new FocusNextTabView(state.focusNextTabViewState)
-    @modalPanel = atom.workspace.addModalPanel(item: @focusNextTabView.getElement(), visible: false)
+  currentPane: null
+  currentItemIndex: -1
 
-    # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
+  FocusSearchView: null
+
+  activate: (state) ->
+
+    @didChangeActivePane(atom.workspace.getActivePane())
+
+    @FocusSearchView = new FocusSearchView(this)
+
     @subscriptions = new CompositeDisposable
 
-    # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'focus-next-tab:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace',
+    'focus-next-tab:Left': => @focusTabLeft()
+    'focus-next-tab:Right': => @focusTabRight()
+    'focus-next-tab:Search': => @focusTabSearch()
+    # coffeelint: disable=max_line_length
+    @subscriptions.add atom.workspace.onDidChangeActivePane (pane) => @didChangeActivePane(pane)
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (item) => @didChangeActivePaneItem()
+    # coffeelint: enable=max_line_length
 
   deactivate: ->
-    @modalPanel.destroy()
-    @subscriptions.dispose()
-    @focusNextTabView.destroy()
+    @subscriptions?.dispose()
 
-  serialize: ->
-    focusNextTabViewState: @focusNextTabView.serialize()
+  focusTab: (paneItemIndex) ->
+    @currentItemIndex = paneItemIndex
+    @currentPane.activateItemAtIndex(paneItemIndex)
+    console.log @currentPane
+    console.log @currentItemIndex
 
-  toggle: ->
-    console.log 'FocusNextTab was toggled!'
+  focusTabLeft: ->
+    @focusTab(if @currentItemIndex - 1 < 0 then 0 else @currentItemIndex - 1)
 
-    if @modalPanel.isVisible()
-      @modalPanel.hide()
+  focusTabRight: ->
+    if @currentItemIndex + 1 >= @currentPane.getItems().length-1
+      @i = @currentPane.getItems().length-1
     else
-      @modalPanel.show()
+      @i = @currentItemIndex + 1
+    @focusTab(@i)
+
+  focusTabSearch: ->
+    @showFocusSearchView()
+
+  showFocusSearchView: ->
+    @focusSearchView ?= new FocusSearchView(this)
+    # coffeelint: disable=max_line_length
+    @items = ((if item.getLongTitle? then item.getLongTitle() else item.getTitle()) for item in @currentPane.getItems())
+    # coffeelint: enable=max_line_length
+    @focusSearchView.show(@items)
+
+  didChangeActivePane: (pane) ->
+    @currentPane = pane
+    @currentItemIndex = @currentPane?.getActiveItemIndex()
+
+  didChangeActivePaneItem: ->
+    if (@currentItemIndex != @currentPane?.getActiveItemIndex())
+      @currentItemIndex = @currentPane?.getActiveItemIndex()
