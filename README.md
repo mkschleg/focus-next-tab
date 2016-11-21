@@ -1,5 +1,7 @@
 # focus-next-tab package
 
-A short description of your package.
+This package replicates functionality from emacs for switching between buffers.
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+ctrl-x left -> Move one buffer to the left
+ctrl-x right -> Move one buffer to the right
+ctrl-x ctrl-b -> search through buffers to select desired buffer to focus.
