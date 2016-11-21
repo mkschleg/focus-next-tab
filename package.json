@@ -1,7 +1,7 @@
 {
   "name": "focus-next-tab",
   "main": "./lib/focus-next-tab",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Another simple package for changing tabs. This one has the ability to change to the left or right of your current tab.",
   "keywords": [
     "tabs",
